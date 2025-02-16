@@ -8,7 +8,8 @@ A new Flutter project for Taekwondo academy.
 
 gantt
 title 개강 전 일정
-dateFormat DD-MM
-axisFormat %M-%D
-회의: milestone, m1, 2-27
+dateFormat MM-DD
+
+section 전체
+회의:active, des1, 02-27
 ```
