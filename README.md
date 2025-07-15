@@ -1,28 +1,16 @@
 # taekwon
 
-A new Flutter project for Taekwondo academy.
+A new Flutter project.
 
-## Plan
+## Getting Started
 
-```mermaid
+This project is a starting point for a Flutter application.
 
-gantt
-title 개강 전 일정
-dateFormat MM-DD
+A few resources to get you started if this is your first Flutter project:
 
-section 회의
-사전 준비:done, 02-16, 11d
-회의:done, 02-27, 1d
-회의:active, 03-09, 1d
-회의:active, 03-16, 1d
-회의:active, 03-23, 1d
-회의:active, 03-30, 1d
-회의:active, 04-06, 1d
-회의:active, 04-13, 1d
+- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
+- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
 
-section 전체
-기능정리:active, 02-27, 7d
-
-section 개발
-
-```
+For help getting started with Flutter development, view the
+[online documentation](https://docs.flutter.dev/), which offers tutorials,
+samples, guidance on mobile development, and a full API reference.
