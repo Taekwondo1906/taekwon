@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-
 // 각 페이지 import
 import 'package:taekwon/home/home_screen.dart'; //  home_screen
-import 'package:taekwon/navigation/navigation_bar.dart';  // navigation_bar
+import 'package:taekwon/login/login_screen.dart';
+import 'package:taekwon/navigation/navigation_bar.dart'; // navigation_bar
 
 void main() {
   runApp(const MyApp());
@@ -27,7 +27,7 @@ class _MainScaffoldState extends State<MainScaffold> {
   int _currentIndex = 0;
 
   final List<Widget> _screens = [
-    const Placeholder(), //  포인트샵 화면
+    const LoginPage(), //  포인트샵 화면...인데 확인차 로그인페이지를 넣어뒀어요!! 나중에 수정예정
     const Placeholder(), //  일정 화면
     const HomeScreen(), //  홈 화면
     const Placeholder(), //  마이페이지 화면
