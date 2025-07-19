@@ -34,7 +34,7 @@ class LoginComplete extends StatelessWidget {
             ),
             const Spacer(),
             SizedBox(
-              width: screenWidth * 0.24,
+              width: screenWidth * 0.3,
               height: 45,
               child: ElevatedButton(
                 onPressed: () => navigateToHome(context),

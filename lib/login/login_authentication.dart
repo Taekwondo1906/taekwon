@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 // 색상 팔레트
 import 'package:taekwon/decoration/color_palette.dart';
 import 'package:taekwon/login/login_complete.dart';
+import 'package:taekwon/login/login_screen.dart';
 
 class LoginAuthentication extends StatefulWidget {
   const LoginAuthentication({super.key});
@@ -27,6 +28,13 @@ class _LoginAuthenticationState extends State<LoginAuthentication> {
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => const LoginComplete()),
+    );
+  }
+
+  void backFunction() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const LoginPage()),
     );
   }
 
@@ -115,15 +123,33 @@ class _LoginAuthenticationState extends State<LoginAuthentication> {
                 ),
                 const SizedBox(height: 44),
                 SizedBox(
-                  width: screenWidth * 0.23,
+                  width: screenWidth * 0.5, // Row 전체 너비 조절
                   height: 45,
-                  child: ElevatedButton(
-                    onPressed: loginFunction,
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: mainColor,
-                      foregroundColor: Colors.white,
-                    ),
-                    child: const Text("확인"),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween, // 양쪽 정렬
+                    children: [
+                      Expanded(
+                        child: ElevatedButton(
+                          onPressed: loginFunction,
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: mainColor,
+                            foregroundColor: Colors.white,
+                          ),
+                          child: const Text("확인"),
+                        ),
+                      ),
+                      const SizedBox(width: 12), // 버튼 사이 간격
+                      Expanded(
+                        child: ElevatedButton(
+                          onPressed: backFunction,
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Color.fromARGB(255, 224, 224, 224),
+                            foregroundColor: Color.fromARGB(255, 163, 160, 160),
+                          ),
+                          child: const Text("취소"),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ],
