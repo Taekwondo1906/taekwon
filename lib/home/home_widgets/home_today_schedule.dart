@@ -11,8 +11,11 @@ class HomeTodaySchedule extends StatefulWidget {
 class _HomeTodayScheduleState extends State<HomeTodaySchedule> {
   @override
   Widget build(BuildContext context) {
+    final screenHeight = MediaQuery.of(context).size.height;
+    final screenWidth = MediaQuery.of(context).size.width;
+
     return Container(
-      height: 300,
+      height: screenHeight * 0.3,
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: const BorderRadius.all(Radius.circular(19)),
@@ -30,8 +33,8 @@ class _HomeTodayScheduleState extends State<HomeTodaySchedule> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // 타이틀은 고정
-          const Padding(
-            padding: EdgeInsets.all(24.0),
+          Padding(
+            padding: EdgeInsets.all(screenWidth * 0.07),
             child: Text(
               '오늘의 일정',
               style: TextStyle(
@@ -47,7 +50,7 @@ class _HomeTodayScheduleState extends State<HomeTodaySchedule> {
           // 일정 리스트만 스크롤
           Expanded(
             child: SingleChildScrollView(
-              padding: const EdgeInsets.symmetric(horizontal: 40),
+              padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.1),
               child: Column(
                 children: [ // 추후 데이터베이스에서 불러오는 방식으로 변경
                   _buildScheduleRow('07:00 - 08:00', '초등부'),
