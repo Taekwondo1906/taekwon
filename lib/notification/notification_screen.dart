@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+
+// 색상 팔레트
 import 'package:taekwon/decoration/color_palette.dart';
 
 class NotificationScreen extends StatefulWidget {
@@ -31,25 +33,32 @@ class _NotificationScreenState extends State<NotificationScreen> {
         : notifications.where((n) => n['type'] == selectedFilter).toList();
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(
-        title: const Text(
-          '알림',
-          style: TextStyle(
-            color: Colors.black,
-            fontSize: 24,
-            fontFamily: 'Inter',
-            fontWeight: FontWeight.w600,
-            height: 0.92,
-          ),
-        ),
-        backgroundColor: Colors.white,
-        elevation: 0,
-        centerTitle: false,
-      ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 24),
         child: Column(
           children: [
+            const SizedBox(height: 60),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                IconButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  icon: Icon(Icons.arrow_back),
+                ),
+                const SizedBox(width: 12,),
+                Text(
+                  '알림',
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 24,
+                    fontWeight: FontWeight.w600,
+                    height: 0.92,
+                  ),
+                ),
+              ],
+            ),
             const SizedBox(height: 24),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 16),

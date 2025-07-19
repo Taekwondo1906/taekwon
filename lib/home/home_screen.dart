@@ -19,6 +19,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     // 화면 높이
     final screenHeight = MediaQuery.of(context).size.height;
+    final screenWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
       body: Stack(
@@ -35,9 +36,9 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
           Positioned(
-            top: 60,
-            left: 24,
-            right: 24,
+            top: screenHeight * 0.1,
+            left: screenWidth * 0.07,
+            right: screenWidth * 0.07,
             child: Material(
               color: Colors.transparent,
               child: Row(
@@ -72,15 +73,15 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
           Positioned.fill(
-            top: 120,
-            left: 35,
-            right: 35,
+            top: screenHeight * 0.2,
+            left: screenWidth * 0.1,
+            right: screenWidth * 0.1,
             child: Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: EdgeInsets.zero,
               child: Column(
                 children: [
                   HomeTodaySchedule(),
-                  SizedBox(height: 50),
+                  SizedBox(height: 40),
                   HomeAnnouncement(),
                 ],
               ),

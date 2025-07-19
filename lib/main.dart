@@ -1,15 +1,26 @@
+import 'package:device_preview/device_preview.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-
+import 'package:flutter/services.dart';
 // 구글 폰트 'Inter' 사용
 import 'package:google_fonts/google_fonts.dart';
-
 // 각 페이지 import
 import 'package:taekwon/home/home_screen.dart'; //  home_screen
 import 'package:taekwon/login/login_screen.dart';
 import 'package:taekwon/navigation/navigation_bar.dart'; // navigation_bar
 
 void main() {
-  runApp(const MyApp());
+  // 사용자의 핸드폰 시스템 UI(상단바, 하단바)가 보이도록 설정
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setEnabledSystemUIMode(
+    SystemUiMode.manual,
+    overlays: [SystemUiOverlay.top],
+  );
+
+  runApp(
+    // 부하 적은 에뮬레이터
+    DevicePreview(enabled: !kReleaseMode, builder: (context) => const MyApp()),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -18,10 +29,14 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData(
-        textTheme: GoogleFonts.interTextTheme(),
-      ),
-      home: const MainScaffold());
+      // -----DevicePreview 설정-----
+      locale: DevicePreview.locale(context),
+      builder: DevicePreview.appBuilder,
+      debugShowCheckedModeBanner: false,
+      // ----------------------------
+      theme: ThemeData(textTheme: GoogleFonts.interTextTheme()),
+      home: const MainScaffold(),
+    );
   }
 }
 

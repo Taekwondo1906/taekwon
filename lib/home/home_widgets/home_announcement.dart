@@ -11,7 +11,11 @@ class HomeAnnouncement extends StatefulWidget {
 class _HomeAnnouncementState extends State<HomeAnnouncement> {
   @override
   Widget build(BuildContext context) {
+    final screenHeight = MediaQuery.of(context).size.height;
+
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.baseline,
+      textBaseline: TextBaseline.alphabetic,
       children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -23,13 +27,12 @@ class _HomeAnnouncementState extends State<HomeAnnouncement> {
                 fontSize: 24,
                 fontFamily: 'inter',
                 fontWeight: FontWeight.w600,
-                height: 0.92,
               ),
             ),
             Container(
               decoration: BoxDecoration(
                 color: boxColor,
-                borderRadius: BorderRadius.all(Radius.circular(10))
+                borderRadius: BorderRadius.all(Radius.circular(10)),
               ),
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -40,42 +43,46 @@ class _HomeAnnouncementState extends State<HomeAnnouncement> {
                     fontSize: 16,
                     fontFamily: 'Inter',
                     fontWeight: FontWeight.w400,
-                    height: 1,
                   ),
                 ),
               ),
             ),
           ],
         ),
-        SizedBox(height: 30,),
-        ListView(
-          shrinkWrap: true,
-          physics: NeverScrollableScrollPhysics(),
-          children: [
-            _buildAnnouncementRow('제목1', '내용1', null),
-            _buildAnnouncementRow(
-              '제목2',
-              '긴줄내용긴줄내용긴줄내용긴줄내용긴줄내용긴줄내용긴줄내용긴줄내용긴줄내용긴줄내용긴줄내용긴줄내용긴줄내용긴줄내용긴줄내용긴줄내용긴줄내용긴줄내용긴줄내용긴줄내용',
-              null,
-            ),
-          ],
+        const SizedBox(height: 8),
+        SizedBox(
+          height: screenHeight * 0.25,
+          child: ListView(
+            padding: EdgeInsets.all(5),
+            children: [
+              _buildAnnouncementRow('제목1', '내용1', null),
+              _buildAnnouncementRow(
+                '제목2',
+                '긴줄내용긴줄내용긴줄내용긴줄내용긴줄내용긴줄내용긴줄내용긴줄내용긴줄내용긴줄내용긴줄내용긴줄내용긴줄내용긴줄내용긴줄내용긴줄내용긴줄내용긴줄내용긴줄내용긴줄내용',
+                null,
+              ),
+            ],
+          ),
         ),
       ],
     );
   }
 
   Widget _buildAnnouncementRow(String title, String content, String? img) {
+    final screenHeight = MediaQuery.of(context).size.height;
+
     return Padding(
-      padding: const EdgeInsets.only(bottom: 15),
+      padding: const EdgeInsets.all(10),
       child: Container(
+        height: screenHeight * 0.15,
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.all(Radius.circular(19)),
           boxShadow: [
             BoxShadow(
               color: shadowColor,
-              blurRadius: 22.7,
-              offset: const Offset(0, 4),
+              blurRadius: 10,
+              offset: const Offset(0, 2),
               spreadRadius: 0,
             ),
           ],
@@ -90,25 +97,31 @@ class _HomeAnnouncementState extends State<HomeAnnouncement> {
                 decoration: BoxDecoration(
                   color: img == null || img.isEmpty ? boxColor : null,
                   image: img != null && img.isNotEmpty
-                      ? DecorationImage(image: NetworkImage(img), fit: BoxFit.cover)
+                      ? DecorationImage(
+                          image: NetworkImage(img),
+                          fit: BoxFit.cover,
+                        )
                       : null,
                 ),
               ),
             ),
             const SizedBox(width: 16),
-      
+
             // 제목 + 내용
             Expanded(
               child: Padding(
-                padding: const EdgeInsets.only(right: 20),
+                padding: const EdgeInsets.fromLTRB(0, 10, 20, 10),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     Text(
                       title,
-                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
-                    const SizedBox(height: 8),
                     Text(
                       content,
                       style: TextStyle(fontSize: 14, color: Colors.black),
