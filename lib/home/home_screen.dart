@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 // 색상 팔레트
 import 'package:taekwon/decoration/color_palette.dart';
 // 위젯
-import 'package:taekwon/home/home_widgets/home_announcement.dart';  // 공지사항
+import 'package:taekwon/home/home_widgets/home_announcement.dart'; // 공지사항
 import 'package:taekwon/home/home_widgets/home_today_schedule.dart';  // 오늘 일정
+import 'package:taekwon/notification/notification_screen.dart'; // 알림
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -22,9 +23,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       body: Stack(
         children: [
-          Container(
-            color: Colors.white,
-          ),
+          Container(color: Colors.white),
           Container(
             height: screenHeight * 0.4,
             decoration: const BoxDecoration(
@@ -39,26 +38,39 @@ class _HomeScreenState extends State<HomeScreen> {
             top: 60,
             left: 24,
             right: 24,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  '태권도장 이름', // 추후 데이터베이스 반영
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 24,
-                    fontFamily: 'inter',
-                    fontWeight: FontWeight.w600,
-                    height: 0.92,
+            child: Material(
+              color: Colors.transparent,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    '태권도장 이름', // 추후 데이터베이스 반영
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 24,
+                      fontFamily: 'inter',
+                      fontWeight: FontWeight.w600,
+                      height: 0.92,
+                    ),
                   ),
-                ),
-                Icon(
-                  Icons.notifications_outlined,
-                  color: Colors.white,
-                  size: 28,
-                ),
-              ],
-            ),),
+                  IconButton(
+                    icon: const Icon(
+                      Icons.notifications_outlined,
+                      color: Colors.white,
+                      size: 28,
+                    ),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const NotificationScreen())
+                      );
+                    },
+                    splashRadius: 24,
+                  ),
+                ],
+              ),
+            ),
+          ),
           Positioned.fill(
             top: 120,
             left: 35,
@@ -68,11 +80,9 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Column(
                 children: [
                   HomeTodaySchedule(),
-                  SizedBox(
-                    height: 50,
-                  ),
-                  HomeAnnouncement()
-                ]
+                  SizedBox(height: 50),
+                  HomeAnnouncement(),
+                ],
               ),
             ),
           ),

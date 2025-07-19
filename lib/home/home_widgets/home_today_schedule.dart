@@ -70,7 +70,7 @@ class _HomeTodayScheduleState extends State<HomeTodaySchedule> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Icon(Icons.circle, color: iconColor, size: 20),
+          Icon(Icons.circle, color: boxColor, size: 20),
           Text(time),
           Container(
             decoration: BoxDecoration(
