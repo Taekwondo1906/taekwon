@@ -65,7 +65,7 @@ class _LoginPageState extends State<LoginPage> {
                           fontSize: 16,
                         ),
                         filled: true,
-                        fillColor: buttonColor,
+                        fillColor: mainColor,
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(100)),
                           borderSide: BorderSide.none,
@@ -87,7 +87,7 @@ class _LoginPageState extends State<LoginPage> {
                   child: ElevatedButton(
                     onPressed: loginFunction,
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: buttonColor,
+                      backgroundColor: mainColor,
                       foregroundColor: Colors.white,
                     ),
                     child: const Text("로그인"),

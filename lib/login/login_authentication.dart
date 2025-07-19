@@ -107,7 +107,7 @@ class _LoginAuthenticationState extends State<LoginAuthentication> {
                   child: ElevatedButton(
                     onPressed: loginFunction, //재발송 기능으로 바꿔야됨 나중에
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: buttonColor,
+                      backgroundColor: mainColor,
                       foregroundColor: Colors.white,
                     ),
                     child: const Text("재발송"),
@@ -120,7 +120,7 @@ class _LoginAuthenticationState extends State<LoginAuthentication> {
                   child: ElevatedButton(
                     onPressed: loginFunction,
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: buttonColor,
+                      backgroundColor: mainColor,
                       foregroundColor: Colors.white,
                     ),
                     child: const Text("확인"),
