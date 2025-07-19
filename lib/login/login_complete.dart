@@ -39,7 +39,7 @@ class LoginComplete extends StatelessWidget {
               child: ElevatedButton(
                 onPressed: () => navigateToHome(context),
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: buttonColor,
+                  backgroundColor: mainColor,
                   foregroundColor: Colors.white,
                 ),
                 child: const Text("홈으로 이동"),
