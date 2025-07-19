@@ -28,7 +28,7 @@ class _HomeAnnouncementState extends State<HomeAnnouncement> {
             ),
             Container(
               decoration: BoxDecoration(
-                color: iconColor,
+                color: boxColor,
                 borderRadius: BorderRadius.all(Radius.circular(10))
               ),
               child: Padding(
@@ -85,10 +85,10 @@ class _HomeAnnouncementState extends State<HomeAnnouncement> {
             Padding(
               padding: const EdgeInsets.all(20.0),
               child: Container(
-                width: 80,
-                height: 80,
+                width: 70,
+                height: 70,
                 decoration: BoxDecoration(
-                  color: img == null || img.isEmpty ? iconColor : null,
+                  color: img == null || img.isEmpty ? boxColor : null,
                   image: img != null && img.isNotEmpty
                       ? DecorationImage(image: NetworkImage(img), fit: BoxFit.cover)
                       : null,

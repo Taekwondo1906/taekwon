@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+
+// 구글 폰트 'Inter' 사용
+import 'package:google_fonts/google_fonts.dart';
+
 // 각 페이지 import
 import 'package:taekwon/home/home_screen.dart'; //  home_screen
 import 'package:taekwon/login/login_screen.dart';
@@ -13,7 +17,11 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(home: const MainScaffold());
+    return MaterialApp(
+      theme: ThemeData(
+        textTheme: GoogleFonts.interTextTheme(),
+      ),
+      home: const MainScaffold());
   }
 }
 
