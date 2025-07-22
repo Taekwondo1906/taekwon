@@ -56,23 +56,42 @@ class _LoginPageState extends State<LoginPage> {
                     width: screenWidth * 0.76,
                     child: TextField(
                       controller: phoneController,
-                      textAlign: TextAlign.center,
-                      style: TextStyle(color: Colors.white),
+                      textAlign: TextAlign.left,
+                      style: const TextStyle(
+                        color: Colors.black, // 입력한 글씨 색상
+                        fontSize: 16,
+                      ),
                       decoration: const InputDecoration(
-                        hintText: "전화번호",
+                        hintText: "전화번호 입력", // 힌트 텍스트
                         hintStyle: TextStyle(
-                          color: Color.fromARGB(255, 255, 255, 255),
+                          color: Color.fromARGB(255, 163, 160, 160),
                           fontSize: 16,
                         ),
                         filled: true,
-                        fillColor: mainColor,
-                        border: OutlineInputBorder(
+                        fillColor: Color.fromARGB(255, 240, 240, 240), // 배경색
+                        enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(100)),
-                          borderSide: BorderSide.none,
+                          borderSide: BorderSide(
+                            color: Color.fromARGB(255, 224, 224, 224),
+                            width: 1.5,
+                          ),
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(100)),
-                          borderSide: BorderSide(color: Colors.blue),
+                          borderSide: BorderSide(
+                            color: Color.fromARGB(
+                              255,
+                              236,
+                              236,
+                              236,
+                            ), // 포커스됐을 때 색
+                            width: 2.0,
+                          ),
+                        ),
+
+                        contentPadding: EdgeInsets.symmetric(
+                          horizontal: 20,
+                          vertical: 14,
                         ),
                       ),
                       keyboardType: TextInputType.phone,
@@ -80,17 +99,35 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
 
-                const SizedBox(height: 24),
+                const SizedBox(height: 86),
                 SizedBox(
-                  width: screenWidth * 0.25,
+                  width: screenWidth * 0.6, // Row 전체 너비 조절
                   height: 45,
-                  child: ElevatedButton(
-                    onPressed: loginFunction,
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: mainColor,
-                      foregroundColor: Colors.white,
-                    ),
-                    child: const Text("로그인"),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween, // 양쪽 정렬
+                    children: [
+                      Expanded(
+                        child: ElevatedButton(
+                          onPressed: loginFunction,
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: mainColor,
+                            foregroundColor: Colors.white,
+                          ),
+                          child: const Text("회원가입"),
+                        ),
+                      ),
+                      const SizedBox(width: 12), // 버튼 사이 간격
+                      Expanded(
+                        child: ElevatedButton(
+                          onPressed: loginFunction,
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: mainColor,
+                            foregroundColor: Colors.white,
+                          ),
+                          child: const Text("확인"),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ],
