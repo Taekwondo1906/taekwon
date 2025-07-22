@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:taekwon/home/home_screen.dart'; //  home_screen
 import 'package:taekwon/login/login_screen.dart';
 import 'package:taekwon/navigation/navigation_bar.dart'; // navigation_bar
+import 'package:taekwon/mypage/mypage_screen.dart'; // mypage
 
 void main() {
   runApp(const MyApp());
@@ -30,7 +31,7 @@ class _MainScaffoldState extends State<MainScaffold> {
     const LoginPage(), //  포인트샵 화면...인데 확인차 로그인페이지를 넣어뒀어요!! 나중에 수정예정
     const Placeholder(), //  일정 화면
     const HomeScreen(), //  홈 화면
-    const Placeholder(), //  마이페이지 화면
+    const MyPage(), //  마이페이지 화면
   ];
 
   void _onTap(int index) {
