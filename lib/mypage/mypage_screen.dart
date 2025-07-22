@@ -84,7 +84,7 @@ class MyPage extends StatelessWidget {
                                 ),
                                 Text('칭호', style: TextStyle(color: mainColor)),
                                 SizedBox(height: 4),
-                                Text('흰 띠 · 500 포인트'),
+                                Text('흰 띠   500 포인트'),
                               ],
                             ),
                           ),
