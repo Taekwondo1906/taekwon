@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:taekwon/decoration/color_palette.dart';
+import 'package:taekwon/home/home_navigator.dart';
 
 class HomeAnnouncement extends StatefulWidget {
   const HomeAnnouncement({super.key});
@@ -29,20 +30,25 @@ class _HomeAnnouncementState extends State<HomeAnnouncement> {
                 fontWeight: FontWeight.w600,
               ),
             ),
-            Container(
-              decoration: BoxDecoration(
-                color: boxColor,
-                borderRadius: BorderRadius.all(Radius.circular(10)),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  '자세히',
-                  style: TextStyle(
-                    color: detailColor,
-                    fontSize: 16,
-                    fontFamily: 'Inter',
-                    fontWeight: FontWeight.w400,
+            InkWell(
+              onTap: () {
+                homeNavigatorKey.currentState?.pushNamed('/announcement');
+              },
+              child: Container(
+                decoration: BoxDecoration(
+                  color: boxColor,
+                  borderRadius: BorderRadius.all(Radius.circular(10)),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    '자세히',
+                    style: TextStyle(
+                      color: detailColor,
+                      fontSize: 16,
+                      fontFamily: 'Inter',
+                      fontWeight: FontWeight.w400,
+                    ),
                   ),
                 ),
               ),

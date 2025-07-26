@@ -4,8 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 // 구글 폰트 'Inter' 사용
 import 'package:google_fonts/google_fonts.dart';
+
 // 각 페이지 import
-import 'package:taekwon/home/home_screen.dart'; //  home_screen
+import 'package:taekwon/home/home_navigator.dart';
 import 'package:taekwon/login/login_screen.dart';
 import 'package:taekwon/navigation/navigation_bar.dart'; // navigation_bar
 import 'package:taekwon/mypage/mypage_screen.dart'; // mypage
@@ -53,11 +54,16 @@ class _MainScaffoldState extends State<MainScaffold> {
   final List<Widget> _screens = [
     const LoginPage(), //  포인트샵 화면...인데 확인차 로그인페이지를 넣어뒀어요!! 나중에 수정예정
     const Placeholder(), //  일정 화면
-    const HomeScreen(), //  홈 화면
+    const HomeNavigator(), //  홈 화면
     const MyPage(), //  마이페이지 화면
   ];
 
   void _onTap(int index) {
+    if (_currentIndex == index) {
+      if (index == 2) {
+        homeNavigatorKey.currentState?.popUntil((route) => route.isFirst);
+      }
+    }
     setState(() {
       _currentIndex = index;
     });
