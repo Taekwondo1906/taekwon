@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 // 색상 팔레트
 import 'package:taekwon/decoration/color_palette.dart';
 import 'package:taekwon/login/login_authentication.dart';
+import 'package:taekwon/login/register/terms_of_service.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -27,6 +28,13 @@ class _LoginPageState extends State<LoginPage> {
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => const LoginAuthentication()),
+    );
+  }
+
+  void signUp() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const TermsOfService()),
     );
   }
 
@@ -108,7 +116,7 @@ class _LoginPageState extends State<LoginPage> {
                     children: [
                       Expanded(
                         child: ElevatedButton(
-                          onPressed: loginFunction,
+                          onPressed: signUp,
                           style: ElevatedButton.styleFrom(
                             backgroundColor: mainColor,
                             foregroundColor: Colors.white,
