@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:taekwon/decoration/color_palette.dart';
+import 'package:taekwon/login/register/register_authentication.dart';
 import 'package:taekwon/login/register/register_complete.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -33,7 +34,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   void backFunction() {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => const RegisterComplete()),
+      MaterialPageRoute(builder: (context) => const RegisterAuthentication()),
     );
   }
 
