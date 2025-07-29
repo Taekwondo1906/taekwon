@@ -31,13 +31,16 @@ class _NotificationScreenState extends State<NotificationScreen> {
     final filtered = selectedFilter == '전체'
         ? notifications
         : notifications.where((n) => n['type'] == selectedFilter).toList();
+    final screenHeight = MediaQuery.of(context).size.height;
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 24),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            const SizedBox(height: 60),
+            SizedBox(height: screenHeight * 0.1),
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [

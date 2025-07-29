@@ -16,6 +16,11 @@ class AnnouncementItems extends StatelessWidget {
           '제목2',
           '긴줄내용긴줄내용긴줄내용긴줄내용긴줄내용긴줄내용긴줄내용긴줄내용긴줄내용긴줄내용긴줄내용긴줄내용긴줄내용긴줄내용긴줄내용긴줄내용긴줄내용긴줄내용긴줄내용긴줄내용',
         ),
+        _buildAnnouncementRow(context, 15, '제목3', '내용1'),
+        _buildAnnouncementRow(context, 15, '제목4', '내용1'),
+        _buildAnnouncementRow(context, 15, '제목5', '내용1'),
+        _buildAnnouncementRow(context, 15, '제목6', '내용1'),
+        _buildAnnouncementRow(context, 15, '제목7', '내용1'),
       ],
     );
   }
@@ -71,7 +76,7 @@ class AnnouncementItems extends StatelessWidget {
                   ),
                 ],
               ),
-              Divider(color: detailColor),
+              Divider(color: boxColor),
               Text(
                 content,
                 style: TextStyle(fontSize: 14, color: Colors.black),
