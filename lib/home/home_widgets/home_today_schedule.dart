@@ -50,7 +50,7 @@ class _HomeTodayScheduleState extends State<HomeTodaySchedule> {
           // 일정 리스트만 스크롤
           Expanded(
             child: SingleChildScrollView(
-              padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.1),
+              padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.07),
               child: Column(
                 children: [ // 추후 데이터베이스에서 불러오는 방식으로 변경
                   _buildScheduleRow('07:00 - 08:00', '초등부'),
@@ -74,13 +74,17 @@ class _HomeTodayScheduleState extends State<HomeTodaySchedule> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Icon(Icons.circle, color: boxColor, size: 20),
-          Text(time),
+          Text(time,
+          style: TextStyle(
+            fontSize: 16
+          ),
+          ),
           Container(
             decoration: BoxDecoration(
               color: labelColor,
               borderRadius: BorderRadius.circular(8),
             ),
-            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
+            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
             child: Text(
               label,
               style: const TextStyle(

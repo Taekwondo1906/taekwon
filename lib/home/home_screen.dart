@@ -73,9 +73,9 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
           Positioned.fill(
-            top: screenHeight * 0.2,
-            left: screenWidth * 0.1,
-            right: screenWidth * 0.1,
+            top: screenHeight * 0.18,
+            left: screenWidth * 0.08,
+            right: screenWidth * 0.08,
             child: Padding(
               padding: EdgeInsets.zero,
               child: Column(
