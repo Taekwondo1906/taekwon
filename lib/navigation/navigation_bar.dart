@@ -27,11 +27,19 @@ class CustomNavigationBar extends StatelessWidget {
       type: BottomNavigationBarType.fixed,
       items: const [
         BottomNavigationBarItem(
-          icon: Icon(Icons.shopping_cart_outlined), label: '포인트 샵'),
-        BottomNavigationBarItem(icon: Icon(Icons.calendar_today_rounded), label: '공지사항'),
+          icon: Icon(Icons.shopping_cart_outlined),
+          label: '포인트 샵',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.calendar_today_rounded),
+          label: '공지사항',
+        ),
         BottomNavigationBarItem(icon: Icon(Icons.home_outlined), label: '홈'),
-        BottomNavigationBarItem(icon: Icon(Icons.person_outline), label: '마이페이지')
-      ]
-      );
+        BottomNavigationBarItem(
+          icon: Icon(Icons.person_outline),
+          label: '마이페이지',
+        ),
+      ],
+    );
   }
 }
