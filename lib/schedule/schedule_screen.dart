@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:taekwon/decoration/color_palette.dart';
+import 'package:taekwon/schedule/attendance_check.dart';
 
 // 분리한 다이얼로그
 import 'add_schedule_dialog.dart';
@@ -184,7 +185,14 @@ class _SchedulePageState extends State<SchedulePage> {
                   Align(
                     alignment: Alignment.centerRight,
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const AttendancePage(),
+                          ),
+                        );
+                      },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: mainColor,
                         foregroundColor: Colors.white,
