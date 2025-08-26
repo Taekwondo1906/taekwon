@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:taekwon/decoration/color_palette.dart';
 import 'package:taekwon/notification/notification_screen.dart';
+import 'package:taekwon/mypage/mypage_navigator.dart';
 
 class TitleManageScreen extends StatelessWidget {
   const TitleManageScreen({super.key});
@@ -176,34 +177,6 @@ class TitleManageScreen extends StatelessWidget {
           ),
         ],
       ),
-      // ✅ 하단 네비게이션 바 추가
-      //bottomNavigationBar: BottomNavigationBar(
-      //  currentIndex: 3, // '마이페이지' 탭이 선택되어 있다고 가정
-      //  selectedItemColor: tabColor,
-      //  unselectedItemColor: detailColor,
-      //  showSelectedLabels: false,
-      //  showUnselectedLabels: false,
-      //  type: BottomNavigationBarType.fixed,
-      //  onTap: (index) {
-      //    // 여기에 탭 이동 처리 로직 추가
-      //    // 예: Navigator.push(context, MaterialPageRoute(builder: (_) => SomeScreen()));
-      //  },
-      //  items: const [
-      //    BottomNavigationBarItem(
-      //      icon: Icon(Icons.shopping_cart_outlined),
-      //      label: '포인트 샵',
-      //    ),
-      //    BottomNavigationBarItem(
-      //      icon: Icon(Icons.calendar_today_rounded),
-      //      label: '공지사항',
-      //    ),
-      //    BottomNavigationBarItem(icon: Icon(Icons.home_outlined), label: '홈'),
-      //    BottomNavigationBarItem(
-      //      icon: Icon(Icons.person_outline),
-      //      label: '마이페이지',
-      //    ),
-      //  ],
-      //),
     );
   }
 }

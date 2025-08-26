@@ -4,11 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 // 구글 폰트 'Inter' 사용
 import 'package:google_fonts/google_fonts.dart';
+
 // 각 페이지 import
 import 'package:taekwon/home/home_navigator.dart';
-import 'package:taekwon/mypage/mypage_screen.dart'; // mypage
-import 'package:taekwon/navigation/navigation_bar.dart';
-import 'package:taekwon/schedule/schedule_screen.dart'; // navigation_bar
+import 'package:taekwon/login/login_screen.dart';
+import 'package:taekwon/navigation/navigation_bar.dart'; // navigation_bar
+import 'package:taekwon/mypage/mypage_navigator.dart'; // mypage navigation bar
 
 void main() {
   // 사용자의 핸드폰 시스템 UI(상단바, 하단바)가 보이도록 설정
@@ -51,10 +52,10 @@ class _MainScaffoldState extends State<MainScaffold> {
   int _currentIndex = 0;
 
   final List<Widget> _screens = [
-    const SchedulePage(), //  포인트샵 화면...인데 확인차 다른페이지를 넣어뒀어요!! 나중에 수정예정
-    const SchedulePage(), //  일정 화면
+    const LoginPage(), //  포인트샵 화면...인데 확인차 로그인페이지를 넣어뒀어요!! 나중에 수정예정
+    const Placeholder(), //  일정 화면
     const HomeNavigator(), //  홈 화면
-    const MyPage(), //  마이페이지 화면
+    const MyPageNavigator(), //  마이페이지 화면
   ];
 
   void _onTap(int index) {

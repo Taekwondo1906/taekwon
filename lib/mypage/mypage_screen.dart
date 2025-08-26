@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 // 색상 팔레트
 import 'package:taekwon/decoration/color_palette.dart';
-import 'title_manage_screen.dart';
-import 'purchase_history_screen.dart';
+import 'package:taekwon/mypage/mypage_navigator.dart'; // <-- 네비게이터 키 사용
 import 'package:taekwon/notification/notification_screen.dart'; // 알림 화면
 
 class MyPage extends StatelessWidget {
@@ -141,7 +140,7 @@ class MyPage extends StatelessWidget {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 40), // 홈과 동일 간격
+                  const SizedBox(height: 40),
                   // 기능 카드
                   Card(
                     color: Colors.white,
@@ -151,15 +150,11 @@ class MyPage extends StatelessWidget {
                     elevation: 4,
                     child: Column(
                       children: [
-                        _buildMenuItem(context, Icons.military_tech, '칭호 관리'),
+                        _buildMenuItem(Icons.military_tech, '칭호 관리'),
                         _buildDivider(),
-                        _buildMenuItem(
-                          context,
-                          Icons.attach_money,
-                          '포인트 사용 내역',
-                        ),
+                        _buildMenuItem(Icons.attach_money, '포인트 사용 내역'),
                         _buildDivider(),
-                        _buildMenuItem(context, Icons.calendar_today, '출결 내역'),
+                        _buildMenuItem(Icons.calendar_today, '출결 내역'),
                       ],
                     ),
                   ),
@@ -173,24 +168,17 @@ class MyPage extends StatelessWidget {
     );
   }
 
-  Widget _buildMenuItem(BuildContext context, IconData icon, String title) {
+  /// 메뉴 아이템 위젯
+  Widget _buildMenuItem(IconData icon, String title) {
     return ListTile(
       leading: Icon(icon, color: Colors.black),
       title: Text(title, style: const TextStyle(fontWeight: FontWeight.w500)),
       trailing: const Icon(Icons.chevron_right),
       onTap: () {
         if (title == '칭호 관리') {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const TitleManageScreen()),
-          );
+          myPageNavigatorKey.currentState?.pushNamed('/title-manage');
         } else if (title == '포인트 사용 내역') {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => const PurchaseHistoryScreen(),
-            ),
-          );
+          myPageNavigatorKey.currentState?.pushNamed('/point-history');
         } else {
           // TODO: 출결 내역 페이지 연결
         }
