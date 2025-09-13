@@ -17,7 +17,6 @@ class MyPage extends StatelessWidget {
         children: [
           Container(color: Colors.white),
           Container(
-            // 1. 배경 파란 부분의 길이를 30%로 조정
             height: screenHeight * 0.3,
             decoration: const BoxDecoration(
               color: mainColor,
@@ -70,7 +69,7 @@ class MyPage extends StatelessWidget {
           // 콘텐츠 영역
           Positioned.fill(
             top: screenHeight * 0.18, // 홈과 동일 비율
-            left: screenWidth * 0.08, // 홈과 동일
+            left: screenWidth * 0.08,
             right: screenWidth * 0.08,
             child: SingleChildScrollView(
               child: Column(
@@ -88,7 +87,6 @@ class MyPage extends StatelessWidget {
                         children: [
                           const CircleAvatar(
                             radius: 28,
-                            // 2. 프로필 아이콘 배경색을 mainColor로 변경
                             backgroundColor: mainColor,
                             child: Icon(
                               Icons.person,
@@ -130,12 +128,12 @@ class MyPage extends StatelessWidget {
                               vertical: 4,
                             ),
                             decoration: BoxDecoration(
-                              color: buttonColor,
-                              borderRadius: BorderRadius.circular(12),
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(10),
+                              border: Border.all(color: boxColor),
                             ),
                             child: const Text(
                               '학생',
-                              // 4. '학생' 태그 글자색 변경
                               style: TextStyle(color: mainColor, fontSize: 12),
                             ),
                           ),
