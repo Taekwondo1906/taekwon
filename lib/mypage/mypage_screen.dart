@@ -17,7 +17,8 @@ class MyPage extends StatelessWidget {
         children: [
           Container(color: Colors.white),
           Container(
-            height: screenHeight * 0.4,
+            // 1. 배경 파란 부분의 길이를 30%로 조정
+            height: screenHeight * 0.3,
             decoration: const BoxDecoration(
               color: mainColor,
               borderRadius: BorderRadius.only(
@@ -87,7 +88,8 @@ class MyPage extends StatelessWidget {
                         children: [
                           const CircleAvatar(
                             radius: 28,
-                            backgroundColor: Colors.grey,
+                            // 2. 프로필 아이콘 배경색을 mainColor로 변경
+                            backgroundColor: mainColor,
                             child: Icon(
                               Icons.person,
                               size: 28,
@@ -98,24 +100,24 @@ class MyPage extends StatelessWidget {
                           Expanded(
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
-                              children: const [
-                                Text(
-                                  '김철수 (1234)',
+                              children: [
+                                const Text(
+                                  '김철수(1234)',
                                   style: TextStyle(
                                     fontSize: 15,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
-                                SizedBox(height: 4),
+                                const SizedBox(height: 4),
                                 Text(
-                                  '칭호',
+                                  '태권도 새싹',
                                   style: TextStyle(
                                     color: mainColor,
                                     fontSize: 14,
                                   ),
                                 ),
-                                SizedBox(height: 4),
-                                Text(
+                                const SizedBox(height: 4),
+                                const Text(
                                   '흰 띠  ·  500 포인트',
                                   style: TextStyle(fontSize: 13),
                                 ),
@@ -128,11 +130,12 @@ class MyPage extends StatelessWidget {
                               vertical: 4,
                             ),
                             decoration: BoxDecoration(
-                              color: Colors.grey,
+                              color: buttonColor,
                               borderRadius: BorderRadius.circular(12),
                             ),
                             child: const Text(
                               '학생',
+                              // 4. '학생' 태그 글자색 변경
                               style: TextStyle(color: mainColor, fontSize: 12),
                             ),
                           ),
