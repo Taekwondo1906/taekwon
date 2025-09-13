@@ -22,7 +22,7 @@ class PurchaseHistoryScreen extends StatelessWidget {
         children: [
           Container(color: Colors.white),
           Container(
-            height: screenHeight * 0.4,
+            height: screenHeight * 0.3,
             decoration: const BoxDecoration(
               color: mainColor,
               borderRadius: BorderRadius.only(
@@ -41,6 +41,18 @@ class PurchaseHistoryScreen extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
+                  IconButton(
+                    icon: const Icon(
+                      Icons.arrow_back_ios_new,
+                      color: Colors.white,
+                      size: 24,
+                    ),
+                    onPressed: () {
+                      // 현재 화면을 종료하고 이전 화면으로 돌아갑니다.
+                      Navigator.pop(context);
+                    },
+                    splashRadius: 24,
+                  ),
                   const Text(
                     '구매 내역',
                     style: TextStyle(
