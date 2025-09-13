@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 // 색상 팔레트
 import 'package:taekwon/decoration/color_palette.dart';
 import 'package:taekwon/login/login_complete.dart';
-import 'package:taekwon/login/login_screen.dart';
 
 class LoginAuthentication extends StatefulWidget {
   const LoginAuthentication({super.key});
@@ -32,10 +31,7 @@ class _LoginAuthenticationState extends State<LoginAuthentication> {
   }
 
   void backFunction() {
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => const LoginPage()),
-    );
+    Navigator.pop(context); // pop으로 변경
   }
 
   @override
