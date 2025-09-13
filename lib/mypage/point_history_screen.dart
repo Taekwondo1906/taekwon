@@ -100,7 +100,7 @@ class _PointHistoryScreenState extends State<PointHistoryScreen> {
           ),
           // 본문 영역
           Positioned.fill(
-            top: screenHeight * 0.18,
+            top: screenHeight * 0.21,
             left: screenWidth * 0.08,
             right: screenWidth * 0.08,
             child: Column(

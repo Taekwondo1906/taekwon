@@ -25,7 +25,6 @@ class TitleManageScreen extends StatelessWidget {
               ),
             ),
           ),
-          // ✅ 홈 화면 스타일과 동일한 헤더
           Positioned(
             top: screenHeight * 0.1,
             left: screenWidth * 0.07,
@@ -42,7 +41,6 @@ class TitleManageScreen extends StatelessWidget {
                       size: 24,
                     ),
                     onPressed: () {
-                      // 현재 화면을 종료하고 이전 화면으로 돌아갑니다.
                       Navigator.pop(context);
                     },
                     splashRadius: 24,
@@ -77,7 +75,7 @@ class TitleManageScreen extends StatelessWidget {
               ),
             ),
           ),
-          // ✅ 콘텐츠 위치 조정 (홈과 동일)
+          // 콘텐츠 위치 홈에 맞춤.
           Positioned.fill(
             top: screenHeight * 0.18,
             left: screenWidth * 0.08,
@@ -97,22 +95,25 @@ class TitleManageScreen extends StatelessWidget {
                         horizontal: 20,
                         vertical: 20,
                       ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                          const Text(
+                            '현재 대표 칭호',
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
+                              color: labelColor,
+                            ),
+                          ),
+                          const SizedBox(height: 12),
+                          // 구분선 추가
+                          Divider(height: 1, color: Colors.grey.shade300),
+                          const SizedBox(height: 12),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text(
-                                '현재 대표 칭호',
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.bold,
-                                  color: labelColor,
-                                ),
-                              ),
-                              SizedBox(height: 4),
-                              Text(
+                              const Text(
                                 '태권도 새싹',
                                 style: TextStyle(
                                   fontSize: 16,
@@ -120,29 +121,29 @@ class TitleManageScreen extends StatelessWidget {
                                   color: mainColor,
                                 ),
                               ),
+                              TextButton(
+                                onPressed: () {},
+                                style: TextButton.styleFrom(
+                                  backgroundColor: Colors.white,
+                                  side: const BorderSide(color: mainColor),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 16,
+                                    vertical: 8,
+                                  ),
+                                ),
+                                child: const Text(
+                                  '변경',
+                                  style: TextStyle(
+                                    color: mainColor,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 13,
+                                  ),
+                                ),
+                              ),
                             ],
-                          ),
-                          TextButton(
-                            onPressed: () {},
-                            style: TextButton.styleFrom(
-                              backgroundColor: Colors.white,
-                              side: const BorderSide(color: mainColor),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(12),
-                              ),
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 16,
-                                vertical: 8,
-                              ),
-                            ),
-                            child: const Text(
-                              '변경',
-                              style: TextStyle(
-                                color: mainColor,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 13,
-                              ),
-                            ),
                           ),
                         ],
                       ),
