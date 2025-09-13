@@ -8,9 +8,12 @@ class LoginComplete extends StatelessWidget {
   const LoginComplete({super.key});
 
   void navigateToHome(BuildContext context) {
-    Navigator.push(
+    Navigator.pushReplacement(
+      // pushReplacement로 변경
       context,
-      MaterialPageRoute(builder: (context) => const MyApp()),
+      MaterialPageRoute(
+        builder: (context) => const MainScaffold(),
+      ), // MyApp() -> MainScaffold()로 변경
     );
   }
 

@@ -25,7 +25,6 @@ class _SchedulePageState extends State<SchedulePage> {
       barrierDismissible: false,
       builder: (ctx) => AddScheduleDialog(initialDateTime: _focusedDay),
     );
-    // 필요 시 결과를 받아 처리하도록 확장 가능: final result = await showDialog(...);
   }
 
   @override

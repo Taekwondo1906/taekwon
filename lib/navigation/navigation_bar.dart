@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 // 색상 팔레트
 import 'package:taekwon/decoration/color_palette.dart';
 

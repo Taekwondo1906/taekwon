@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:taekwon/home/home_screen.dart';
 import 'package:taekwon/announcement/announcement_screen.dart';
+import 'package:taekwon/home/home_screen.dart';
 
 final GlobalKey<NavigatorState> homeNavigatorKey = GlobalKey<NavigatorState>();
 

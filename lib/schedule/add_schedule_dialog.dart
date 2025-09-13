@@ -4,7 +4,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:taekwon/decoration/color_palette.dart';
 
-// 경로는 프로젝트 구조에 맞게 수정하세요.
 import 'add_student.dart';
 
 class AddScheduleDialog extends StatefulWidget {
