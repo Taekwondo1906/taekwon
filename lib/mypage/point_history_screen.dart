@@ -59,7 +59,7 @@ class _PointHistoryScreenState extends State<PointHistoryScreen> {
                 children: [
                   IconButton(
                     icon: const Icon(
-                      Icons.arrow_back_ios_new,
+                      Icons.arrow_back,
                       color: Colors.white,
                       size: 24,
                     ),
