@@ -1,3 +1,4 @@
+//이거 쓰지 마시오
 import 'package:flutter/material.dart';
 import 'package:taekwon/decoration/color_palette.dart';
 import 'package:taekwon/notification/notification_screen.dart';
