@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:taekwon/decoration/color_palette.dart';
+import 'package:taekwon/notification/notification_screen.dart';
 import 'package:taekwon/schedule/attendance_check.dart';
 
 // 분리한 다이얼로그
@@ -34,6 +35,7 @@ class _SchedulePageState extends State<SchedulePage> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: Colors.white,
         centerTitle: false,
         title: const Padding(
@@ -47,7 +49,14 @@ class _SchedulePageState extends State<SchedulePage> {
           Padding(
             padding: const EdgeInsets.only(right: 29),
             child: IconButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const NotificationScreen(),
+                  ),
+                );
+              },
               icon: const Icon(Icons.notifications_none),
             ),
           ),

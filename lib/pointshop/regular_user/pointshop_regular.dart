@@ -71,6 +71,7 @@ class _PointShopRegularPageState extends State<PointShopRegularPage>
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: const Text(
           '포인트 샵',
           style: TextStyle(
