@@ -17,10 +17,7 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      throw UnsupportedError(
-        'DefaultFirebaseOptions have not been configured for web - '
-        'you can reconfigure this by running the FlutterFire CLI again.',
-      );
+      return web;
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
@@ -59,4 +56,15 @@ class DefaultFirebaseOptions {
     projectId: 'taekwondo-a589c',
     storageBucket: 'taekwondo-a589c.firebasestorage.app',
   );
+
+  static const FirebaseOptions web = FirebaseOptions(
+    apiKey: 'AIzaSyDgGzKb2-5ySqCKbBHK8XyfOOGMU23vUF4',
+    appId: '1:545318949406:web:c3f134a5b3c5baafa1140f',
+    messagingSenderId: '545318949406',
+    projectId: 'taekwondo-a589c',
+    authDomain: 'taekwondo-a589c.firebaseapp.com',
+    storageBucket: 'taekwondo-a589c.firebasestorage.app',
+    measurementId: 'G-SYX98GFQKH',
+  );
+
 }

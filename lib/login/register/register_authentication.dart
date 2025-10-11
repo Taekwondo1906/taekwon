@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:taekwon/decoration/color_palette.dart';
 import 'package:taekwon/login/login_screen.dart';
-
 import '../../utils/phone_number_formatter.dart';
 
 class RegisterAuthentication extends StatefulWidget {
@@ -15,40 +15,114 @@ class RegisterAuthentication extends StatefulWidget {
 class _RegisterAuthenticationState extends State<RegisterAuthentication> {
   final TextEditingController phoneController = TextEditingController();
   final TextEditingController authCodeController = TextEditingController();
+  final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  // --- 바로 이 함수의 로직이 중요합니다 ---
-  void loginFunction() {
+  String? _verificationId; // Firebase에서 받은 인증 ID 저장용
+  bool _isCodeSent = false; // 인증번호 입력란 활성화 여부 제어
+
+  // 전화번호 유효성 검증 (예: 010-xxxx-xxxx)
+  bool isValidPhoneNumber(String phoneNumber) {
+    final cleaned = phoneNumber.replaceAll(RegExp(r'[^0-9]'), '');
+    return cleaned.length == 11 && cleaned.startsWith('010');
+  }
+
+  // 인증번호 전송 함수
+  Future<void> sendVerificationCode() async {
     String phoneNumber = phoneController.text.trim();
-    String authCode = authCodeController.text.trim();
 
-    // 1. 전화번호 유효성 검사를 먼저 수행합니다.
-    //    isValidPhoneNumber 함수는 길이가 짧은 경우 false를 반환합니다.
     if (!isValidPhoneNumber(phoneNumber)) {
-      // 전화번호가 올바르지 않으면, 전화번호 오류 메시지를 보여주고 즉시 함수를 종료합니다.
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(const SnackBar(content: Text("올바른 형식의 전화번호를 입력해주세요.")));
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("올바른 형식의 전화번호를 입력해주세요.")),
+      );
       return;
     }
 
-    // 2. 위의 전화번호 검사를 통과했을 때만, 인증번호 검사를 수행합니다.
-    if (authCode.isEmpty) {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(const SnackBar(content: Text("인증번호를 입력해주세요.")));
+    // Firebase용 형식(+82로 시작)
+    String formatted = '+82${phoneNumber.substring(1)}';
+
+    try {
+      await _auth.verifyPhoneNumber(
+        phoneNumber: formatted,
+        timeout: const Duration(seconds: 60),
+        verificationCompleted: (PhoneAuthCredential credential) async {
+          // Android에서 자동 인증되는 경우
+          await _auth.signInWithCredential(credential);
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text("자동으로 인증이 완료되었습니다.")),
+          );
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => const LoginPage()),
+          );
+        },
+        verificationFailed: (FirebaseAuthException e) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text("인증 실패: ${e.message}")),
+          );
+        },
+        codeSent: (String verificationId, int? resendToken) {
+          setState(() {
+            _verificationId = verificationId;
+            _isCodeSent = true;
+          });
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text("인증번호가 전송되었습니다.")),
+          );
+        },
+        codeAutoRetrievalTimeout: (String verificationId) {
+          _verificationId = verificationId;
+        },
+      );
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("에러 발생: $e")),
+      );
+    }
+  }
+
+  // 인증번호 확인 및 로그인
+  Future<void> verifyCodeAndLogin() async {
+    String smsCode = authCodeController.text.trim();
+    if (_verificationId == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("먼저 인증번호를 전송해주세요.")),
+      );
+      return;
+    }
+    if (smsCode.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("인증번호를 입력해주세요.")),
+      );
       return;
     }
 
-    // 모든 검사를 통과하면 다음 화면으로 이동
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => const LoginPage()),
-    );
+    try {
+      PhoneAuthCredential credential = PhoneAuthProvider.credential(
+        verificationId: _verificationId!,
+        smsCode: smsCode,
+      );
+
+      final userCredential = await _auth.signInWithCredential(credential);
+      final isNewUser = userCredential.additionalUserInfo?.isNewUser ?? false;
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(isNewUser ? "회원가입 완료!" : "로그인 완료!"),
+        ),
+      );
+
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => const LoginPage()),
+      );
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("인증 실패: $e")),
+      );
+    }
   }
 
-  void backFunction() {
-    Navigator.pop(context);
-  }
+  void backFunction() => Navigator.pop(context);
 
   @override
   Widget build(BuildContext context) {
@@ -71,20 +145,14 @@ class _RegisterAuthenticationState extends State<RegisterAuthentication> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 24.0),
             child: Column(
-              mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Align(
+                // 전화번호 입력
+                const Align(
                   alignment: Alignment.centerLeft,
                   child: Padding(
-                    padding: const EdgeInsets.only(left: 24.0),
-                    child: const Text(
-                      "전화번호",
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
+                    padding: EdgeInsets.only(left: 24.0),
+                    child: Text("전화번호", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
                   ),
                 ),
                 const SizedBox(height: 6),
@@ -96,30 +164,13 @@ class _RegisterAuthenticationState extends State<RegisterAuthentication> {
                     style: const TextStyle(fontSize: 16),
                     decoration: const InputDecoration(
                       hintText: "전화번호 입력",
-                      hintStyle: TextStyle(
-                        color: Color(0xFFA3A0A0),
-                        fontSize: 16,
-                      ),
                       filled: true,
                       fillColor: Color(0xFFF0F0F0),
-                      enabledBorder: OutlineInputBorder(
+                      border: OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(100)),
-                        borderSide: BorderSide(
-                          color: Color(0xFFE0E0E0),
-                          width: 1.5,
-                        ),
+                        borderSide: BorderSide(color: Color(0xFFE0E0E0)),
                       ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(100)),
-                        borderSide: BorderSide(
-                          color: Color(0xFFECECEC),
-                          width: 2.0,
-                        ),
-                      ),
-                      contentPadding: EdgeInsets.symmetric(
-                        horizontal: 20,
-                        vertical: 14,
-                      ),
+                      contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 14),
                     ),
                     keyboardType: TextInputType.phone,
                     inputFormatters: [
@@ -129,18 +180,15 @@ class _RegisterAuthenticationState extends State<RegisterAuthentication> {
                     ],
                   ),
                 ),
+
                 const SizedBox(height: 24),
-                Align(
+
+                // 인증번호 입력
+                const Align(
                   alignment: Alignment.centerLeft,
                   child: Padding(
-                    padding: const EdgeInsets.only(left: 24.0),
-                    child: const Text(
-                      "인증번호",
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
+                    padding: EdgeInsets.only(left: 24.0),
+                    child: Text("인증번호", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
                   ),
                 ),
                 const SizedBox(height: 6),
@@ -153,37 +201,17 @@ class _RegisterAuthenticationState extends State<RegisterAuthentication> {
                         child: TextField(
                           controller: authCodeController,
                           textAlign: TextAlign.left,
+                          enabled: _isCodeSent, // 인증번호 전송 후에만 입력 가능
                           style: const TextStyle(fontSize: 16),
                           decoration: const InputDecoration(
                             hintText: "인증번호 입력",
-                            hintStyle: TextStyle(
-                              color: Color(0xFFA3A0A0),
-                              fontSize: 16,
-                            ),
                             filled: true,
                             fillColor: Color(0xFFF0F0F0),
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(100),
-                              ),
-                              borderSide: BorderSide(
-                                color: Color(0xFFE0E0E0),
-                                width: 1.5,
-                              ),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.all(Radius.circular(100)),
+                              borderSide: BorderSide(color: Color(0xFFE0E0E0)),
                             ),
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(100),
-                              ),
-                              borderSide: BorderSide(
-                                color: Color(0xFFECECEC),
-                                width: 2.0,
-                              ),
-                            ),
-                            contentPadding: EdgeInsets.symmetric(
-                              horizontal: 20,
-                              vertical: 14,
-                            ),
+                            contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 14),
                           ),
                           keyboardType: TextInputType.number,
                         ),
@@ -192,32 +220,23 @@ class _RegisterAuthenticationState extends State<RegisterAuthentication> {
                       Expanded(
                         flex: 1,
                         child: ElevatedButton(
-                          onPressed: () {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(content: Text("인증번호 전송 클릭됨")),
-                            );
-                          },
+                          onPressed: sendVerificationCode,
                           style: ElevatedButton.styleFrom(
                             backgroundColor: mainColor,
                             foregroundColor: Colors.white,
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 0,
-                              vertical: 14,
-                            ),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(100),
-                            ),
+                            padding: const EdgeInsets.symmetric(vertical: 14),
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(100)),
                           ),
-                          child: const Text(
-                            "인증번호 전송",
-                            style: TextStyle(fontSize: 11),
-                          ),
+                          child: const Text("인증번호 전송", style: TextStyle(fontSize: 11)),
                         ),
                       ),
                     ],
                   ),
                 ),
+
                 const SizedBox(height: 44),
+
+                // 확인 / 취소 버튼
                 Center(
                   child: SizedBox(
                     width: screenWidth * 0.5,
@@ -227,7 +246,7 @@ class _RegisterAuthenticationState extends State<RegisterAuthentication> {
                       children: [
                         Expanded(
                           child: ElevatedButton(
-                            onPressed: loginFunction,
+                            onPressed: verifyCodeAndLogin,
                             style: ElevatedButton.styleFrom(
                               backgroundColor: mainColor,
                               foregroundColor: Colors.white,

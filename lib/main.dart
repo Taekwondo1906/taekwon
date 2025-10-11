@@ -13,10 +13,14 @@ import 'package:taekwon/pointshop/regular_user/pointshop_regular.dart';
 import 'package:taekwon/schedule/schedule_screen.dart'; // mypage navigation bar
 
 import 'firebase_options.dart';
+import 'package:firebase_core/firebase_core.dart';
 
-void main() {
+void main() async {
   // 사용자의 핸드폰 시스템 UI(상단바, 하단바)가 보이도록 설정
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform
+  );
   SystemChrome.setEnabledSystemUIMode(
     SystemUiMode.manual,
     overlays: [SystemUiOverlay.top],
