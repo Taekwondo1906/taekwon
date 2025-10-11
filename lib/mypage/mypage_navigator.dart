@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:taekwon/mypage/mypage_screen.dart';
 import 'package:taekwon/mypage/point_history_screen.dart';
 import 'package:taekwon/mypage/title_manage_screen.dart';
-import 'package:taekwon/mypage/attendance_screen.dart'; // 출결 내역
+import 'package:taekwon/mypage/attendance_screen.dart';
 
 final GlobalKey<NavigatorState> myPageNavigatorKey =
     GlobalKey<NavigatorState>();
@@ -27,7 +27,7 @@ class MyPageNavigator extends StatelessWidget {
           case '/title-manage':
             page = const TitleManageScreen();
             break;
-          case '/attendance':
+          case '/attendance-history':
             page = const AttendanceHistoryScreen();
             break;
           default:

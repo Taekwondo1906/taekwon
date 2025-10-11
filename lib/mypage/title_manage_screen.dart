@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:taekwon/decoration/color_palette.dart';
 import 'package:taekwon/notification/notification_screen.dart';
-import 'package:taekwon/mypage/mypage_navigator.dart';
 
 class TitleManageScreen extends StatelessWidget {
   const TitleManageScreen({super.key});
