@@ -12,6 +12,8 @@ import 'package:taekwon/navigation/navigation_bar.dart'; // navigation_bar
 import 'package:taekwon/pointshop/regular_user/pointshop_regular.dart';
 import 'package:taekwon/schedule/schedule_screen.dart'; // mypage navigation bar
 
+import 'firebase_options.dart';
+
 void main() {
   // 사용자의 핸드폰 시스템 UI(상단바, 하단바)가 보이도록 설정
   WidgetsFlutterBinding.ensureInitialized();
