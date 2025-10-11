@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "545318949406",
+    "project_id": "taekwondo-a589c",
+    "storage_bucket": "taekwondo-a589c.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:545318949406:android:d3de4e2f567faecaa1140f",
+        "android_client_info": {
+          "package_name": "com.android.application"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyADH_V2xVXpVmVtRW1eKqC6FRNiXR43u24"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
