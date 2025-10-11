@@ -156,6 +156,7 @@ class MyPage extends StatelessWidget {
                         _buildMenuItem(Icons.attach_money, '포인트 사용 내역'),
                         _buildDivider(),
                         _buildMenuItem(Icons.calendar_today, '출결 내역'),
+                        _buildDivider(),
                       ],
                     ),
                   ),
