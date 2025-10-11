@@ -217,18 +217,43 @@ class _TermsOfServiceState extends State<TermsOfService> {
               ),
             ),
             const SizedBox(height: 32),
-            SizedBox(
-              width: screenWidth * 0.3,
-              height: 45,
-              child: ElevatedButton(
-                onPressed: selectUserFunction,
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: mainColor,
-                  foregroundColor: Colors.white,
+            // START: --- 버튼 부분 수정 ---
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                // 취소 버튼
+                SizedBox(
+                  width: screenWidth * 0.3,
+                  height: 45,
+                  child: OutlinedButton(
+                    onPressed: () {
+                      // 이전 화면으로 돌아가기
+                      Navigator.pop(context);
+                    },
+                    style: OutlinedButton.styleFrom(
+                      foregroundColor: mainColor,
+                      side: BorderSide(color: mainColor),
+                    ),
+                    child: const Text("취소"),
+                  ),
                 ),
-                child: const Text("확인"),
-              ),
+                const SizedBox(width: 20), // 버튼 사이 간격
+                // 확인 버튼 (기존 코드)
+                SizedBox(
+                  width: screenWidth * 0.3,
+                  height: 45,
+                  child: ElevatedButton(
+                    onPressed: selectUserFunction,
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: mainColor,
+                      foregroundColor: Colors.white,
+                    ),
+                    child: const Text("확인"),
+                  ),
+                ),
+              ],
             ),
+            // END: --- 버튼 부분 수정 ---
             const SizedBox(height: 32),
           ],
         ),

@@ -128,12 +128,7 @@ class _AttendancePageState extends State<AttendancePage> {
           ],
         ),
         iconTheme: const IconThemeData(color: Colors.black), // 뒤로가기/아이콘 색
-        actions: const [
-          Padding(
-            padding: EdgeInsets.only(right: 16.0),
-            child: Icon(Icons.notifications_none, color: Colors.black),
-          ),
-        ],
+        actions: const [],
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),

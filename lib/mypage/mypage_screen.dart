@@ -181,7 +181,7 @@ class MyPage extends StatelessWidget {
         } else if (title == '포인트 사용 내역') {
           myPageNavigatorKey.currentState?.pushNamed('/point-history');
         } else {
-          // TODO: 출결 내역 페이지 연결
+          myPageNavigatorKey.currentState?.pushNamed('/attendance-history');
         }
       },
     );

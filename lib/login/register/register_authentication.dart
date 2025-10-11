@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:taekwon/decoration/color_palette.dart';
-import 'package:taekwon/login/register/dojang_verification.dart';
-import 'package:taekwon/login/register/register_screen.dart';
+import 'package:taekwon/login/login_screen.dart';
+
+import '../../utils/phone_number_formatter.dart';
 
 class RegisterAuthentication extends StatefulWidget {
   const RegisterAuthentication({super.key});
@@ -11,31 +13,41 @@ class RegisterAuthentication extends StatefulWidget {
 }
 
 class _RegisterAuthenticationState extends State<RegisterAuthentication> {
-  final TextEditingController nameController = TextEditingController();
-  final TextEditingController addressController = TextEditingController();
+  final TextEditingController phoneController = TextEditingController();
+  final TextEditingController authCodeController = TextEditingController();
 
+  // --- 바로 이 함수의 로직이 중요합니다 ---
   void loginFunction() {
-    String name = nameController.text.trim();
-    String address = addressController.text.trim();
+    String phoneNumber = phoneController.text.trim();
+    String authCode = authCodeController.text.trim();
 
-    if (name.isEmpty || address.isEmpty) {
+    // 1. 전화번호 유효성 검사를 먼저 수행합니다.
+    //    isValidPhoneNumber 함수는 길이가 짧은 경우 false를 반환합니다.
+    if (!isValidPhoneNumber(phoneNumber)) {
+      // 전화번호가 올바르지 않으면, 전화번호 오류 메시지를 보여주고 즉시 함수를 종료합니다.
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text("올바른 형식의 전화번호를 입력해주세요.")));
+      return;
+    }
+
+    // 2. 위의 전화번호 검사를 통과했을 때만, 인증번호 검사를 수행합니다.
+    if (authCode.isEmpty) {
       ScaffoldMessenger.of(
         context,
       ).showSnackBar(const SnackBar(content: Text("인증번호를 입력해주세요.")));
       return;
     }
 
+    // 모든 검사를 통과하면 다음 화면으로 이동
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => const RegisterScreen()),
+      MaterialPageRoute(builder: (context) => const LoginPage()),
     );
   }
 
   void backFunction() {
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => const DojangVerification()),
-    );
+    Navigator.pop(context);
   }
 
   @override
@@ -60,13 +72,12 @@ class _RegisterAuthenticationState extends State<RegisterAuthentication> {
             padding: const EdgeInsets.symmetric(horizontal: 24.0),
             child: Column(
               mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.center, // 전체 가운데 정렬 유지
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                // 도장 이름 레이블
                 Align(
                   alignment: Alignment.centerLeft,
                   child: Padding(
-                    padding: const EdgeInsets.only(left: 24.0), // ← 왼쪽 여백 추가
+                    padding: const EdgeInsets.only(left: 24.0),
                     child: const Text(
                       "전화번호",
                       style: TextStyle(
@@ -80,7 +91,7 @@ class _RegisterAuthenticationState extends State<RegisterAuthentication> {
                 SizedBox(
                   width: screenWidth * 0.76,
                   child: TextField(
-                    controller: nameController,
+                    controller: phoneController,
                     textAlign: TextAlign.left,
                     style: const TextStyle(fontSize: 16),
                     decoration: const InputDecoration(
@@ -110,15 +121,19 @@ class _RegisterAuthenticationState extends State<RegisterAuthentication> {
                         vertical: 14,
                       ),
                     ),
+                    keyboardType: TextInputType.phone,
+                    inputFormatters: [
+                      FilteringTextInputFormatter.digitsOnly,
+                      LengthLimitingTextInputFormatter(11),
+                      PhoneNumberFormatter(),
+                    ],
                   ),
                 ),
                 const SizedBox(height: 24),
-
-                // 도장 주소 레이블
                 Align(
                   alignment: Alignment.centerLeft,
                   child: Padding(
-                    padding: const EdgeInsets.only(left: 24.0), // ← 왼쪽 여백 추가
+                    padding: const EdgeInsets.only(left: 24.0),
                     child: const Text(
                       "인증번호",
                       style: TextStyle(
@@ -128,17 +143,15 @@ class _RegisterAuthenticationState extends State<RegisterAuthentication> {
                     ),
                   ),
                 ),
-
                 const SizedBox(height: 6),
                 SizedBox(
                   width: screenWidth * 0.76,
                   child: Row(
                     children: [
-                      // 입력 필드
                       Expanded(
                         flex: 2,
                         child: TextField(
-                          controller: addressController,
+                          controller: authCodeController,
                           textAlign: TextAlign.left,
                           style: const TextStyle(fontSize: 16),
                           decoration: const InputDecoration(
@@ -172,18 +185,16 @@ class _RegisterAuthenticationState extends State<RegisterAuthentication> {
                               vertical: 14,
                             ),
                           ),
+                          keyboardType: TextInputType.number,
                         ),
                       ),
-
                       const SizedBox(width: 8),
-
-                      // 인증 버튼
                       Expanded(
                         flex: 1,
                         child: ElevatedButton(
                           onPressed: () {
                             ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(content: Text("인증번호 확인 클릭됨")),
+                              const SnackBar(content: Text("인증번호 전송 클릭됨")),
                             );
                           },
                           style: ElevatedButton.styleFrom(
@@ -206,10 +217,7 @@ class _RegisterAuthenticationState extends State<RegisterAuthentication> {
                     ],
                   ),
                 ),
-
                 const SizedBox(height: 44),
-
-                // 버튼 영역
                 Center(
                   child: SizedBox(
                     width: screenWidth * 0.5,

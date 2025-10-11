@@ -38,7 +38,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       // ----------------------------
       theme: ThemeData(textTheme: GoogleFonts.interTextTheme()),
-      home: const LoginPage(), // 이 부분을 LoginPage()로 변경
+      home: const LoginPage(),
     );
   }
 }
@@ -50,7 +50,7 @@ class MainScaffold extends StatefulWidget {
 }
 
 class _MainScaffoldState extends State<MainScaffold> {
-  int _currentIndex = 0;
+  int _currentIndex = 2;
 
   final List<Widget> _screens = [
     const PointShopRegularPage(), //  포인트샵 화면

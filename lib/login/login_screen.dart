@@ -1,10 +1,13 @@
 //로그인 화면
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 // 색상 팔레트
 import 'package:taekwon/decoration/color_palette.dart';
 import 'package:taekwon/login/login_authentication.dart';
 import 'package:taekwon/login/register/terms_of_service.dart';
+
+import '../utils/phone_number_formatter.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -16,15 +19,19 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final TextEditingController phoneController = TextEditingController();
 
+  // --- 여기를 수정했습니다 ---
   void loginFunction() {
-    String phone = phoneController.text.trim();
+    String phoneNumber = phoneController.text.trim();
 
-    if (phone.isEmpty) {
+    // phone_number_formatter.dart에 있는 유효성 검사 함수를 재사용합니다.
+    if (!isValidPhoneNumber(phoneNumber)) {
       ScaffoldMessenger.of(
         context,
-      ).showSnackBar(const SnackBar(content: Text("전화번호를 입력해주세요.")));
+      ).showSnackBar(const SnackBar(content: Text("올바른 형식의 전화번호를 입력해주세요.")));
       return;
     }
+
+    // 유효성 검사를 통과하면 인증 화면으로 이동합니다.
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => const LoginAuthentication()),
@@ -34,7 +41,9 @@ class _LoginPageState extends State<LoginPage> {
   void signUp() {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => const TermsOfService()),
+      MaterialPageRoute(
+        builder: (context) => const TermsOfService(),
+      ), // 클래스 이름 오타 수정된 것 확인
     );
   }
 
@@ -96,17 +105,21 @@ class _LoginPageState extends State<LoginPage> {
                             width: 2.0,
                           ),
                         ),
-
                         contentPadding: EdgeInsets.symmetric(
                           horizontal: 20,
                           vertical: 14,
                         ),
                       ),
                       keyboardType: TextInputType.phone,
+                      // PhoneNumberFormatter가 정상적으로 동작하는 것을 확인
+                      inputFormatters: [
+                        FilteringTextInputFormatter.digitsOnly,
+                        LengthLimitingTextInputFormatter(11),
+                        PhoneNumberFormatter(),
+                      ],
                     ),
                   ),
                 ),
-
                 const SizedBox(height: 86),
                 SizedBox(
                   width: screenWidth * 0.6, // Row 전체 너비 조절
