@@ -182,7 +182,6 @@ class _RegisterAuthenticationState extends State<RegisterAuthentication> {
                         flex: 1,
                         child: ElevatedButton(
                           onPressed: () {
-                            // TODO: 인증번호 확인 로직
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(content: Text("인증번호 확인 클릭됨")),
                             );

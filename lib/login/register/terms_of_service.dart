@@ -60,7 +60,6 @@ class _TermsOfServiceState extends State<TermsOfService> {
               height: 45,
               child: ElevatedButton(
                 onPressed: () {
-                  // TODO: 이용약관 상세 보기 이동
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: mainColor,
