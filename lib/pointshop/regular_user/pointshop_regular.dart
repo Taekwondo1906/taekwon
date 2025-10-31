@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:taekwon/decoration/color_palette.dart';
 import 'package:taekwon/pointshop/regular_user/product_detail_page.dart';
 
@@ -16,26 +18,14 @@ class _PointShopRegularPageState extends State<PointShopRegularPage>
   final TextEditingController _searchController = TextEditingController();
 
   final List<String> categories = ['전체', '의류', '용품', '음식', '기타'];
-  final List<Map<String, dynamic>> allProducts = [
-    {'name': '태권도 도복', 'price': '45,000원', 'category': '의류'},
-    {'name': '태권도 띠', 'price': '14,000원', 'category': '의류'},
-    {'name': '필통', 'price': '8,000원', 'category': '용품'},
-    {'name': '연필', 'price': '1,000원', 'category': '용품'},
-    {'name': '샤프', 'price': '3,500원', 'category': '용품'},
-    {'name': '네모스낵', 'price': '1,200원', 'category': '음식'},
-    {'name': '밭두렁', 'price': '1,000원', 'category': '음식'},
-    {'name': '포카리스웨트', 'price': '1,500원', 'category': '음식'},
-    {'name': '컵', 'price': '6,000원', 'category': '기타'},
-  ];
-
-  List<Map<String, dynamic>> _filteredProducts = [];
 
   @override
   void initState() {
     super.initState();
     _tabController = TabController(length: 2, vsync: this);
-    _filteredProducts = allProducts;
-    _searchController.addListener(_filterProducts);
+    _searchController.addListener(() {
+      setState(() {});
+    });
   }
 
   @override
@@ -43,27 +33,6 @@ class _PointShopRegularPageState extends State<PointShopRegularPage>
     _tabController.dispose();
     _searchController.dispose();
     super.dispose();
-  }
-
-  void _filterProducts() {
-    String query = _searchController.text.toLowerCase();
-    String selectedCategory = categories[_selectedCategoryIndex];
-
-    setState(() {
-      _filteredProducts = allProducts.where((product) {
-        final productName = product['name'].toLowerCase();
-        final productCategory = product['category'];
-
-        // 카테고리 필터링
-        final categoryMatch =
-            selectedCategory == '전체' || productCategory == selectedCategory;
-
-        // 검색어 필터링
-        final queryMatch = productName.contains(query);
-
-        return categoryMatch && queryMatch;
-      }).toList();
-    });
   }
 
   @override
@@ -105,7 +74,6 @@ class _PointShopRegularPageState extends State<PointShopRegularPage>
       body: TabBarView(
         controller: _tabController,
         children: [
-          // 쇼핑 탭
           SingleChildScrollView(
             child: Padding(
               padding: const EdgeInsets.all(16.0),
@@ -115,14 +83,11 @@ class _PointShopRegularPageState extends State<PointShopRegularPage>
                   const SizedBox(height: 10),
                   _buildSearchBar(),
                   const SizedBox(height: 16),
-                  _buildCategoryFilters(),
-                  const SizedBox(height: 24),
                   _buildProductGrid(),
                 ],
               ),
             ),
           ),
-          // 주문내역 탭
           const Center(child: Text('주문내역 페이지')),
         ],
       ),
@@ -167,7 +132,6 @@ class _PointShopRegularPageState extends State<PointShopRegularPage>
               onSelected: (selected) {
                 setState(() {
                   _selectedCategoryIndex = index;
-                  _filterProducts();
                 });
               },
               shape: RoundedRectangleBorder(
@@ -182,31 +146,75 @@ class _PointShopRegularPageState extends State<PointShopRegularPage>
   }
 
   Widget _buildProductGrid() {
-    return GridView.builder(
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
-        crossAxisSpacing: 16.0,
-        mainAxisSpacing: 16.0,
-        childAspectRatio: 0.7,
-      ),
-      itemCount: _filteredProducts.length,
-      itemBuilder: (context, index) {
-        final product = _filteredProducts[index];
-        return GestureDetector(
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => ProductDetailPage(product: product),
+    Query query = FirebaseFirestore.instance.collection('point_shop');
+
+    return StreamBuilder<QuerySnapshot>(
+      stream: query.snapshots(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(child: CircularProgressIndicator());
+        }
+
+        if (snapshot.hasError) {
+          return const Center(child: Text('오류가 발생했습니다.'));
+        }
+
+        if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+          return const Center(child: Text('상품이 없습니다.'));
+        }
+
+        var docs = snapshot.data!.docs;
+
+        final String searchQuery = _searchController.text.toLowerCase();
+        final filteredDocs = docs.where((doc) {
+          final data = doc.data() as Map<String, dynamic>;
+          final name = data['name'].toString().toLowerCase();
+
+          if (searchQuery.isEmpty) {
+            return true;
+          }
+          return name.contains(searchQuery);
+        }).toList();
+
+        if (filteredDocs.isEmpty) {
+          return const Center(child: Text('검색 결과가 없습니다.'));
+        }
+
+        return GridView.builder(
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            crossAxisSpacing: 16.0,
+            mainAxisSpacing: 16.0,
+            childAspectRatio: 0.7,
+          ),
+          itemCount: filteredDocs.length,
+          itemBuilder: (context, index) {
+            final productDoc = filteredDocs[index];
+            final product = productDoc.data() as Map<String, dynamic>;
+
+            final price = (product['price'] ?? 0).toInt();
+            final formattedPrice = NumberFormat.simpleCurrency(
+              locale: "ko_KR",
+              decimalDigits: 0,
+            ).format(price);
+
+            return GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ProductDetailPage(product: product),
+                  ),
+                );
+              },
+              child: _buildProductCard(
+                name: product['name'] ?? '이름 없음',
+                price: formattedPrice,
               ),
             );
           },
-          child: _buildProductCard(
-            name: product['name'],
-            price: product['price'],
-          ),
         );
       },
     );

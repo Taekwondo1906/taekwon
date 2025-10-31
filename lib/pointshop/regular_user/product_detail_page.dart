@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:taekwon/decoration/color_palette.dart';
 
 class ProductDetailPage extends StatefulWidget {
@@ -50,10 +51,9 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
           _buildImageSlider(),
           _buildPageIndicator(),
           _buildProductInfo(),
-          // 이전에 Spacer()가 있던 자리에 SizedBox로 간격 조절
           const SizedBox(height: 20),
           _buildBuyButton(),
-          const SizedBox(height: 20), // 아래쪽 여백 추가
+          const SizedBox(height: 20),
         ],
       ),
     );
@@ -98,6 +98,12 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
   }
 
   Widget _buildProductInfo() {
+    final price = (widget.product['price'] ?? 0).toInt();
+    final formattedPrice = NumberFormat.simpleCurrency(
+      locale: "ko_KR",
+      decimalDigits: 0,
+    ).format(price);
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 24.0),
       child: Column(
@@ -109,7 +115,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
           ),
           const SizedBox(height: 8),
           Text(
-            widget.product['price'] ?? '가격',
+            formattedPrice,
             style: const TextStyle(
               fontSize: 20,
               color: mainColor,
@@ -133,9 +139,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
         width: double.infinity,
         height: 50,
         child: ElevatedButton(
-          onPressed: () {
-            // 구매하기 기능 구현
-          },
+          onPressed: () {},
           style: ElevatedButton.styleFrom(
             backgroundColor: mainColor,
             foregroundColor: Colors.white,
